@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
-import { Button } from '@/components/ui/button'
+import { Button } from '../ui/button'
 
 const plans = [
   {
