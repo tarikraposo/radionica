@@ -11,6 +11,7 @@ import {
 import { useScroll, useTransform, motion } from "framer-motion";
 import * as THREE from "three";
 
+//scale = tamanho do objeto
 function Model() {
   const { scene } = useGLTF("/models/mesa.glb");
   const meshRef = useRef<THREE.Group>(null);
@@ -43,7 +44,7 @@ function Model() {
         config={{ mass: 2, tension: 400 }}
         snap={{ mass: 4, tension: 300 }}
       >
-        <group ref={meshRef} scale={1.2} rotation={[0.4, 0, 0]}>
+        <group ref={meshRef} scale={1.8} rotation={[0.4, 0, 0]}> 
           <primitive object={scene} />
         </group>
       </PresentationControls>
@@ -51,31 +52,31 @@ function Model() {
   );
 }
 
-function FallbackGeometry() {
-  const meshRef = useRef<THREE.Mesh>(null);
+// function FallbackGeometry() {
+//   const meshRef = useRef<THREE.Mesh>(null);
 
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
-      meshRef.current.rotation.x =
-        Math.sin(state.clock.getElapsedTime() * 0.3) * 0.1;
-    }
-  });
+//   useFrame((state) => {
+//     if (meshRef.current) {
+//       meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
+//       meshRef.current.rotation.x =
+//         Math.sin(state.clock.getElapsedTime() * 0.3) * 0.1;
+//     }
+//   });
 
-  return (
-    <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.6}>
-      <mesh ref={meshRef}>
-        <torusKnotGeometry args={[1, 0.3, 128, 32]} />
-        <meshStandardMaterial
-          color="#c9a227"
-          metalness={0.9}
-          roughness={0.1}
-          envMapIntensity={1.5}
-        />
-      </mesh>
-    </Float>
-  );
-}
+//   return (
+//     <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.6}>
+//       <mesh ref={meshRef}>
+//         <torusKnotGeometry args={[1, 0.3, 128, 32]} />
+//         <meshStandardMaterial
+//           color="#c9a227"
+//           metalness={0.9}
+//           roughness={0.1}
+//           envMapIntensity={1.5}
+//         />
+//       </mesh>
+//     </Float>
+//   );
+// }
 
 function Scene() {
   return (

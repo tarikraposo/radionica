@@ -22,9 +22,8 @@ export function AboutSection() {
       id="sobre" 
       className="relative min-h-screen flex items-center py-32 overflow-hidden"
     >
-      {/* Background decorativo */}
+      {/* Background decorativo (removido blur azul para alternância) */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 right-0 w-[40%] h-[50%] bg-blue-glow/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-0 left-0 w-[30%] h-[40%] bg-gold-light/8 rounded-full blur-[100px]" />
       </div>
 
