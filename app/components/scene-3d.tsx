@@ -14,10 +14,22 @@ import * as THREE from "three";
 function Model() {
   const { scene } = useGLTF("/models/mesa.glb");
   const meshRef = useRef<THREE.Group>(null);
+  const { viewport } = useThree();
 
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
+      const x = (state.pointer.x * viewport.width) / 20;
+      const y = (state.pointer.y * viewport.height) / 20;
+      meshRef.current.rotation.y = THREE.MathUtils.lerp(
+        meshRef.current.rotation.y,
+        x,
+        0.1,
+      );
+      meshRef.current.rotation.x = THREE.MathUtils.lerp(
+        meshRef.current.rotation.x,
+        -y,
+        0.1,
+      );
     }
   });
 
@@ -83,7 +95,7 @@ function Scene() {
         color="#fff5e6"
       />
       <Environment preset="studio" />
-      <Suspense fallback={<FallbackGeometry />}>
+      <Suspense fallback={null}>
         <Model />
       </Suspense>
     </>
@@ -91,35 +103,19 @@ function Scene() {
 }
 
 export function Scene3D() {
-  const { scrollYProgress } = useScroll();
-
-  // Ajuste de movimento vertical: começa centralizado e sobe levemente
-  const y = useTransform(scrollYProgress, [0, 0.4], ["0%", "-10%"]);
-
-  // Escala: mantém presença visual forte nas duas primeiras seções
-  const scale = useTransform(scrollYProgress, [0, 0.3, 0.6], [1.1, 1, 0.8]);
-
-  // Opacidade: visível na Section 1 e 2, começa a sumir na Section 3
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 0.8], [1, 1, 0]);
-
   return (
-    <motion.div
-      className="fixed inset-0 z-10 pointer-events-none"
-      style={{ y, scale, opacity }}
-    >
-      <div className="absolute inset-0 pointer-events-auto">
-        <Canvas
-          camera={{ position: [0, 0, 5], fov: 45 }}
-          gl={{
-            antialias: true,
-            alpha: true,
-            powerPreference: "high-performance",
-          }}
-          style={{ background: "transparent" }}
-        >
-          <Scene />
-        </Canvas>
-      </div>
-    </motion.div>
+    <div className="absolute inset-0 z-0 pointer-events-auto">
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 45 }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+        }}
+        style={{ background: "transparent" }}
+      >
+        <Scene />
+      </Canvas>
+    </div>
   );
 }
