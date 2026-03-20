@@ -2,13 +2,13 @@
 
 import { Suspense, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useScroll, useTransform } from "framer-motion";
 import {
   useGLTF,
   Environment,
   Float,
   PresentationControls,
 } from "@react-three/drei";
-import { useScroll, useTransform, motion } from "framer-motion";
 import * as THREE from "three";
 
 //scale = tamanho do objeto
@@ -17,25 +17,40 @@ function Model() {
   const meshRef = useRef<THREE.Group>(null);
   const { viewport } = useThree();
 
+  const { scrollYProgress } = useScroll();
+
+  const yPosition = useTransform(scrollYProgress, [0, 1], [0, -1.5]);
+  const rotationYScroll = useTransform(scrollYProgress, [0, 1], [0, Math.PI]);
+
   useFrame((state) => {
-    if (meshRef.current) {
-      const x = (state.pointer.x * viewport.width) / 20;
-      const y = (state.pointer.y * viewport.height) / 20;
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(
-        meshRef.current.rotation.y,
-        x,
-        0.1,
-      );
-      meshRef.current.rotation.x = THREE.MathUtils.lerp(
-        meshRef.current.rotation.x,
-        -y,
-        0.1,
-      );
-    }
+    if (!meshRef.current) return;
+
+    const x = (state.pointer.x * viewport.width) / 20;
+    const y = (state.pointer.y * viewport.height) / 20;
+
+    // suaviza interação com mouse
+    meshRef.current.rotation.y = THREE.MathUtils.lerp(
+      meshRef.current.rotation.y,
+      x + rotationYScroll.get(),
+      0.05,
+    );
+
+    meshRef.current.rotation.x = THREE.MathUtils.lerp(
+      meshRef.current.rotation.x,
+      -y,
+      0.05,
+    );
+
+    // movimento vertical com scroll
+    meshRef.current.position.y = THREE.MathUtils.lerp(
+      meshRef.current.position.y,
+      yPosition.get(),
+      0.05,
+    );
   });
 
   return (
-    <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
+    <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.4}>
       <PresentationControls
         global
         rotation={[0, 0, 0]}
@@ -44,7 +59,7 @@ function Model() {
         config={{ mass: 2, tension: 400 }}
         snap={{ mass: 4, tension: 300 }}
       >
-        <group ref={meshRef} scale={1.8} rotation={[0.4, 0, 0]}> 
+        <group ref={meshRef} scale={1.8} rotation={[0.4, 0, 0]}>
           <primitive object={scene} />
         </group>
       </PresentationControls>
@@ -95,6 +110,7 @@ function Scene() {
         intensity={1}
         color="#fff5e6"
       />
+      <pointLight position={[0, 2, 3]} intensity={1} color="#ffd700" />
       <Environment preset="studio" />
       <Suspense fallback={null}>
         <Model />
