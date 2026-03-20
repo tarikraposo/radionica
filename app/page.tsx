@@ -15,6 +15,8 @@ export default function HomePage() {
     <SmoothScroll>
       <main className="relative">
         <Header />
+        
+        {/* O Scene3D agora é renderizado ANTES do conteúdo principal para agir como background */}
         <Scene3D />
         
         <div className="relative z-20">
