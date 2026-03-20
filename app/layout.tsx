@@ -5,12 +5,12 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const geist = localFont({
-  src: "/fonts/Geist.woff2",
+  src: "../public/fonts/Geist/static/Geist-Regular.ttf",
   variable: "--font-geist",
 });
 
 const geistMono = localFont({
-  src: "/fonts/GeistMono.woff2",
+  src: "../public/fonts/Geist_Mono/static/GeistMono-Regular.ttf",
   variable: "--font-geist-mono",
 });
 
