@@ -38,3 +38,24 @@ body {
 
   filter: blur(40px);
 }
+
+.section {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px;
+}
+
+.hero h1 {
+  font-size: 64px;
+  font-weight: 600;
+}
+
+button {
+  padding: 12px 24px;
+  background: gold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
