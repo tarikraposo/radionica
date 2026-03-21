@@ -7,74 +7,67 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function BackgroundAudio() {
   const [isMuted, setIsMuted] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  // Carrega a preferência de áudio do usuário se existir
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.05; // Volume bem baixo (5%) para som ambiente sutil
+    const savedMute = localStorage.getItem("audioMuted");
+    if (savedMute !== null) {
+      setIsMuted(savedMute === "true");
     }
+  }, []);
 
-    const handleInteraction = () => {
-      if (audioRef.current && !isMuted) {
-        audioRef.current
-          .play()
-          .then(() => {
-            setHasInteracted(true);
-            // Uma vez que tocou, removemos os listeners de interação global
-            cleanup();
-          })
-          .catch((error) => {
-            console.log("Ainda bloqueado pelo navegador:", error);
-          });
-      }
-    };
-
-    const cleanup = () => {
-      window.removeEventListener("click", handleInteraction);
-      window.removeEventListener("scroll", handleInteraction);
-      window.removeEventListener("touchstart", handleInteraction);
-      window.removeEventListener("mousemove", handleInteraction);
-      window.removeEventListener("keydown", handleInteraction);
-    };
-
-    // Adiciona listeners para qualquer interação do usuário na página
-    window.addEventListener("click", handleInteraction);
-    window.addEventListener("scroll", handleInteraction);
-    window.addEventListener("touchstart", handleInteraction);
-    window.addEventListener("mousemove", handleInteraction);
-    window.addEventListener("keydown", handleInteraction);
-
-    return cleanup;
-  }, [hasInteracted, isMuted]);
-
+  // Gerencia a reprodução e as tentativas de autoplay
   useEffect(() => {
-    if (audioRef.current) {
-      if (!isMuted) {
-        audioRef.current.play().catch(() => {
-          // Silenciosamente falha se o autoplay ainda estiver bloqueado
+    if (!audioRef.current) return;
+
+    // Salva a escolha do usuário
+    localStorage.setItem("audioMuted", isMuted.toString());
+
+    audioRef.current.volume = 0.05; // Volume bem baixo (5%)
+
+    if (isMuted) {
+      audioRef.current.pause();
+    } else {
+      // Tenta tocar imediatamente
+      const playPromise = audioRef.current.play();
+
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Bloqueado pelo navegador!
+          // Vamos esperar por QUALQUER clique ou tecla na página toda
+          const startOnInteraction = () => {
+            if (audioRef.current && !isMuted) {
+              audioRef.current
+                .play()
+                .then(() => {
+                  // Deu certo! Removemos os ouvintes
+                  document.removeEventListener("click", startOnInteraction);
+                  document.removeEventListener("keydown", startOnInteraction);
+                  document.removeEventListener(
+                    "touchstart",
+                    startOnInteraction,
+                  );
+                })
+                .catch(() => {});
+            }
+          };
+
+          document.addEventListener("click", startOnInteraction);
+          document.addEventListener("keydown", startOnInteraction);
+          document.addEventListener("touchstart", startOnInteraction);
         });
-      } else {
-        audioRef.current.pause();
       }
     }
   }, [isMuted]);
 
   const toggleMute = () => {
-    setIsMuted(!isMuted);
-    // Se o usuário clicar manualmente no botão, consideramos como interação
-    setHasInteracted(true);
+    setIsMuted((prev) => !prev);
   };
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <audio
-        ref={audioRef}
-        src="/audio/noria_sound.mp3"
-        loop
-        preload="auto"
-        autoPlay={!isMuted}
-      />
+      <audio ref={audioRef} src="/audio/noria_sound.mp3" loop preload="auto" />
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
