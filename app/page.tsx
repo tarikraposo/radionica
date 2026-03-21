@@ -6,6 +6,7 @@ import { ContactSection } from "./components/sections/contact-section"
 import { HeroSection } from "./components/sections/hero-section"
 import { HowItWorksSection } from "./components/sections/how-it-works-section"
 import { SmoothScroll } from "./components/smooth-scroll"
+import { BackgroundAudio } from "./components/background-audio"
 
 
 
@@ -21,6 +22,7 @@ export default function HomePage() {
           <HowItWorksSection />
           <ContactSection />
         </div>
+        <BackgroundAudio />
       </main>
     </SmoothScroll>
   )
