@@ -43,6 +43,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { BackgroundAudio } from "./components/background-audio";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -55,6 +57,7 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased overflow-x-hidden">
         {children}
+        <BackgroundAudio />
         <Analytics />
       </body>
     </html>
