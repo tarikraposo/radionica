@@ -6,8 +6,9 @@ import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function BackgroundAudio() {
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const isFirstRender = useRef(true);
 
   // Carrega a preferência de áudio do usuário se existir
   useEffect(() => {
@@ -21,8 +22,12 @@ export function BackgroundAudio() {
   useEffect(() => {
     if (!audioRef.current) return;
 
-    // Salva a escolha do usuário
-    localStorage.setItem("audioMuted", isMuted.toString());
+    // Não salva no localStorage no primeiro render para não sobrescrever a preferência carregada
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      localStorage.setItem("audioMuted", isMuted.toString());
+    }
 
     audioRef.current.volume = 0.05; // Volume bem baixo (5%)
 
