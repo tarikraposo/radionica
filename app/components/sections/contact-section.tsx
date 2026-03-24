@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useRef, useState } from 'react'
-import { motion, useScroll, useTransform, useInView } from 'framer-motion'
-import { Button } from '../ui/button'
+import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { Button } from "../ui/button";
 
 const plans = [
   {
@@ -14,9 +14,9 @@ const plans = [
       "Duração de 60-90 minutos",
       "Diagnóstico energético completo",
       "Tratamento personalizado",
-      "Orientações pós-sessão"
+      "Orientações pós-sessão",
     ],
-    highlighted: false
+    highlighted: false,
   },
   {
     name: "Pacote Transformação",
@@ -27,9 +27,9 @@ const plans = [
       "Acompanhamento semanal",
       "Tratamentos de manutenção",
       "Suporte via WhatsApp",
-      "Material de apoio exclusivo"
+      "Material de apoio exclusivo",
     ],
-    highlighted: true
+    highlighted: true,
   },
   {
     name: "Atendimento à Distância",
@@ -40,42 +40,39 @@ const plans = [
       "Mesmo efeito presencial",
       "Relatório por escrito",
       "Gravação da sessão",
-      "Flexibilidade de horário"
+      "Flexibilidade de horário",
     ],
-    highlighted: false
-  }
-]
+    highlighted: false,
+  },
+];
 
 export function ContactSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useRef<HTMLDivElement>(null)
-  const formRef = useRef<HTMLFormElement>(null)
-  const isInView = useInView(titleRef, { once: true, margin: "-100px" })
-  const [formSubmitted, setFormSubmitted] = useState(false)
-  
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const isInView = useInView(titleRef, { once: true, margin: "-100px" });
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"]
-  })
-  
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"])
+    offset: ["start end", "end start"],
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setFormSubmitted(true)
-  }
+    e.preventDefault();
+    setFormSubmitted(true);
+  };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      id="contratar" 
-      className="relative min-h-screen py-32 overflow-hidden"
+      id="contratar"
+      className="relative min-h-screen pt-16 pb-32 overflow-hidden"
     >
       {/* Background com parallax */}
-      <motion.div 
-        className="absolute inset-0"
-        style={{ y: backgroundY }}
-      >
+      <motion.div className="absolute inset-0" style={{ y: backgroundY }}>
         <div className="absolute top-1/3 left-0 w-[45%] h-[50%] bg-blue-glow/12 rounded-full blur-[140px]" />
         <div className="absolute bottom-0 right-1/4 w-[40%] h-[45%] bg-gold-light/10 rounded-full blur-[130px]" />
       </motion.div>
@@ -91,7 +88,7 @@ export function ContactSection() {
           >
             03
           </motion.span>
-          
+
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -102,14 +99,15 @@ export function ContactSection() {
             <br />
             <span className="text-primary">Jornada</span>
           </motion.h2>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-muted-foreground text-lg mt-6 max-w-xl mx-auto"
           >
-            Escolha a opção que melhor se adequa às suas necessidades e comece sua transformação energética hoje.
+            Escolha a opção que melhor se adequa às suas necessidades e comece
+            sua transformação energética hoje.
           </motion.p>
         </div>
 
@@ -144,18 +142,33 @@ export function ContactSection() {
               className="text-center p-12 rounded-2xl bg-card/50 border border-primary/30"
             >
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <svg
+                  className="w-8 h-8 text-primary"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               </div>
               <h4 className="text-xl font-medium mb-2">Mensagem Enviada!</h4>
-              <p className="text-muted-foreground">Retornaremos em breve. Gratidão pela confiança.</p>
+              <p className="text-muted-foreground">
+                Retornaremos em breve. Gratidão pela confiança.
+              </p>
             </motion.div>
           ) : (
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium mb-2"
+                  >
                     Nome
                   </label>
                   <input
@@ -167,7 +180,10 @@ export function ContactSection() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium mb-2"
+                  >
                     E-mail
                   </label>
                   <input
@@ -179,9 +195,12 @@ export function ContactSection() {
                   />
                 </div>
               </div>
-              
+
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium mb-2"
+                >
                   WhatsApp
                 </label>
                 <input
@@ -193,7 +212,10 @@ export function ContactSection() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium mb-2"
+                >
                   Mensagem
                 </label>
                 <textarea
@@ -205,8 +227,8 @@ export function ContactSection() {
                 />
               </div>
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-6 text-base font-medium"
               >
                 Enviar Mensagem
@@ -230,13 +252,22 @@ export function ContactSection() {
               © 2026 Mesa Radiônica. Todos os direitos reservados.
             </p>
             <div className="flex items-center gap-6">
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <a
+                href="#"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Instagram
               </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <a
+                href="#"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
                 WhatsApp
               </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <a
+                href="#"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
                 E-mail
               </a>
             </div>
@@ -244,23 +275,22 @@ export function ContactSection() {
         </div>
       </motion.footer>
     </section>
-  )
+  );
 }
 
-function PlanCard({ plan, index }: { plan: typeof plans[0], index: number }) {
-  const cardRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(cardRef, { once: true, margin: "-50px" })
+function PlanCard({ plan, index }: { plan: (typeof plans)[0]; index: number }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-50px" });
 
   return (
     <motion.div
       ref={cardRef}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-      className={`relative p-8 rounded-2xl border backdrop-blur-sm transition-all duration-500 ${
-        plan.highlighted 
-          ? 'bg-primary/5 border-primary/40 scale-105' 
-          : 'bg-card/50 border-border/50 hover:border-primary/30'
+      className={`relative p-8 rounded-2xl border backdrop-blur-sm transition-transform duration-150 ease-out hover:scale-105 ${
+        plan.highlighted
+          ? "bg-primary/5 border-primary/40 scale-105 shadow-[0_20px_50px_-12px_rgba(var(--primary-rgb),0.15)] hover:scale-110 "
+          : "bg-card/50 border-border/50 hover:border-primary/30 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)]"
       }`}
     >
       {plan.highlighted && (
@@ -269,7 +299,7 @@ function PlanCard({ plan, index }: { plan: typeof plans[0], index: number }) {
         </span>
       )}
 
-      <div className="text-center mb-8">
+      <div className="text-center mb-8 ">
         <h3 className="text-xl font-medium mb-2">{plan.name}</h3>
         <p className="text-sm text-muted-foreground mb-4">{plan.description}</p>
         <div className="flex items-baseline justify-center gap-1">
@@ -280,23 +310,33 @@ function PlanCard({ plan, index }: { plan: typeof plans[0], index: number }) {
       <ul className="space-y-3 mb-8">
         {plan.features.map((feature, i) => (
           <li key={i} className="flex items-center gap-3 text-sm">
-            <svg className="w-5 h-5 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            <svg
+              className="w-5 h-5 text-primary flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
             </svg>
             <span className="text-muted-foreground">{feature}</span>
           </li>
         ))}
       </ul>
 
-      <Button 
-        className={`w-full py-5 ${
-          plan.highlighted 
-            ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
-            : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-        }`}
+      <Button
+        className={`w-full py-5 cursor-pointer ${
+          plan.highlighted
+            ? "bg-primary text-primary-foreground hover:bg-primary/90"
+            : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+        } `}
       >
         Agendar Sessão
       </Button>
     </motion.div>
-  )
+  );
 }
