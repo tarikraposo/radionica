@@ -1,11 +1,12 @@
 "use client";
-
+import { FaWhatsapp } from "react-icons/fa";
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Button } from "../ui/button";
 
 const plans = [
   {
+    id: 0,
     name: "Sessão Única",
     price: "R$ 180",
     description: "Ideal para quem quer experimentar",
@@ -19,6 +20,7 @@ const plans = [
     highlighted: false,
   },
   {
+    id: 1,
     name: "Pacote Transformação",
     price: "R$ 450",
     description: "Recomendado para resultados profundos",
@@ -32,6 +34,7 @@ const plans = [
     highlighted: true,
   },
   {
+    id: 2,
     name: "Atendimento à Distância",
     price: "R$ 150",
     description: "Para quem está longe",
@@ -282,6 +285,15 @@ function PlanCard({ plan, index }: { plan: (typeof plans)[0]; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardRef, { once: true, margin: "-50px" });
 
+  function scheduleSession() {
+    const numero = "5561992072082";
+    const mensagem = `Olá, gostaria de agendar uma sessão com a mesa Radiônica *${plan.name}*.`;
+
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+
+    window.open(url, "_blank");
+  }
+
   return (
     <motion.div
       ref={cardRef}
@@ -334,8 +346,12 @@ function PlanCard({ plan, index }: { plan: (typeof plans)[0]; index: number }) {
             ? "bg-primary text-primary-foreground hover:bg-primary/90"
             : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
         } `}
+        onClick={() => scheduleSession()}
       >
-        Agendar Sessão
+        <div className="flex items-center w-full justify-center gap-2">
+          <FaWhatsapp size={24} />
+          <span className="text-sm font-medium">Agendar Sessão</span>
+        </div>
       </Button>
     </motion.div>
   );
