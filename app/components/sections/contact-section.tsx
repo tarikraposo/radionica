@@ -62,9 +62,35 @@ export function ContactSection() {
   });
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const sendForm = async (data: {
+    nome: string;
+    email: string;
+    whatsapp: string;
+    mensagem: string;
+  }) => {
+    try {
+      await fetch("/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.error("Erro ao enviar formulário:", error);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const formData = new FormData(formRef.current!);
+    const dados = Object.fromEntries(formData.entries()) as {
+      nome: string;
+      email: string;
+      whatsapp: string;
+      mensagem: string;
+    };
+    sendForm(dados);
     setFormSubmitted(true);
   };
 
@@ -177,6 +203,7 @@ export function ContactSection() {
                   <input
                     type="text"
                     id="name"
+                    name="nome"
                     required
                     className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors outline-none"
                     placeholder="Seu nome"
@@ -192,6 +219,7 @@ export function ContactSection() {
                   <input
                     type="email"
                     id="email"
+                    name="email"
                     required
                     className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors outline-none"
                     placeholder="seu@email.com"
@@ -209,6 +237,7 @@ export function ContactSection() {
                 <input
                   type="tel"
                   id="phone"
+                  name="whatsapp"
                   className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors outline-none"
                   placeholder="(00) 00000-0000"
                 />
@@ -223,6 +252,7 @@ export function ContactSection() {
                 </label>
                 <textarea
                   id="message"
+                  name="mensagem"
                   rows={4}
                   required
                   className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors outline-none resize-none"
