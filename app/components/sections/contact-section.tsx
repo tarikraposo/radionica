@@ -287,15 +287,10 @@ function PlanCard({ plan, index }: { plan: (typeof plans)[0]; index: number }) {
       ref={cardRef}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{
-        duration: 0.7,
-        delay: index * 0.15,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className={`relative p-8 rounded-2xl border backdrop-blur-sm transition-all duration-500 ${
+      className={`relative p-8 rounded-2xl border backdrop-blur-sm transition-transform duration-150 ease-out hover:scale-105 ${
         plan.highlighted
-          ? "bg-primary/5 border-primary/40 scale-105"
-          : "bg-card/50 border-border/50 hover:border-primary/30"
+          ? "bg-primary/5 border-primary/40 scale-105 shadow-[0_20px_50px_-12px_rgba(var(--primary-rgb),0.15)] hover:scale-110 "
+          : "bg-card/50 border-border/50 hover:border-primary/30 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)]"
       }`}
     >
       {plan.highlighted && (
