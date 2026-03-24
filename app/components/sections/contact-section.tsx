@@ -62,9 +62,28 @@ export function ContactSection() {
   });
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const sendForm = async (data: {
+    nome: string;
+    email: string;
+    whatsapp: string;
+    mensagem: string;
+  }) => {
+    await fetch("/api/send", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const formData = new FormData(formRef.current!);
+    const dados = Object.fromEntries(formData.entries()) as {
+      nome: string;
+      email: string;
+      whatsapp: string;
+      mensagem: string;
+    };
+    sendForm(dados);
     setFormSubmitted(true);
   };
 
@@ -233,6 +252,7 @@ export function ContactSection() {
               <Button
                 type="submit"
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-6 text-base font-medium"
+                onClick={handleSubmit}
               >
                 Enviar Mensagem
               </Button>
