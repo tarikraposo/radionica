@@ -68,10 +68,17 @@ export function ContactSection() {
     whatsapp: string;
     mensagem: string;
   }) => {
-    await fetch("/api/send", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+    try {
+      await fetch("/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.error("Erro ao enviar formulário:", error);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -196,6 +203,7 @@ export function ContactSection() {
                   <input
                     type="text"
                     id="name"
+                    name="nome"
                     required
                     className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors outline-none"
                     placeholder="Seu nome"
@@ -211,6 +219,7 @@ export function ContactSection() {
                   <input
                     type="email"
                     id="email"
+                    name="email"
                     required
                     className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors outline-none"
                     placeholder="seu@email.com"
@@ -228,6 +237,7 @@ export function ContactSection() {
                 <input
                   type="tel"
                   id="phone"
+                  name="whatsapp"
                   className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors outline-none"
                   placeholder="(00) 00000-0000"
                 />
@@ -242,6 +252,7 @@ export function ContactSection() {
                 </label>
                 <textarea
                   id="message"
+                  name="mensagem"
                   rows={4}
                   required
                   className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors outline-none resize-none"
@@ -252,7 +263,6 @@ export function ContactSection() {
               <Button
                 type="submit"
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-6 text-base font-medium"
-                onClick={handleSubmit}
               >
                 Enviar Mensagem
               </Button>
