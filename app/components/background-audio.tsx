@@ -6,17 +6,22 @@ import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function BackgroundAudio() {
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(() => {
+    if (typeof window === "undefined") return true;
+
+    const saved = localStorage.getItem("audioMuted");
+    return saved !== null ? saved === "true" : true;
+  });
   const audioRef = useRef<HTMLAudioElement>(null);
   const isFirstRender = useRef(true);
 
   // Carrega a preferência de áudio do usuário se existir
-  useEffect(() => {
-    const savedMute = localStorage.getItem("audioMuted");
-    if (savedMute !== null) {
-      setIsMuted(savedMute === "true");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedMute = localStorage.getItem("audioMuted");
+  //   if (savedMute !== null) {
+  //     setIsMuted(savedMute === "true");
+  //   }
+  // }, []);
 
   // Gerencia a reprodução e as tentativas de autoplay
   useEffect(() => {
