@@ -22,6 +22,7 @@ export function BackgroundAudio() {
 
     const startOnInteraction = () => {
       if (!isMuted) {
+        audio.muted = false;
         audio.play().catch(() => {});
       }
       removeListeners();
@@ -55,12 +56,9 @@ export function BackgroundAudio() {
       removeListeners();
     } else {
       if (!playAttempted.current) {
-        const timer = setTimeout(() => {
-          attemptPlay();
-          playAttempted.current = true;
-        }, 3000);
+        attemptPlay();
+        playAttempted.current = true;
         return () => {
-          clearTimeout(timer);
           removeListeners();
         };
       } else {
