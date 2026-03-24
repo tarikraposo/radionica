@@ -69,7 +69,7 @@ export function ContactSection() {
     <section
       ref={sectionRef}
       id="contratar"
-      className="relative min-h-screen py-32 overflow-hidden"
+      className="relative min-h-screen pt-16 pb-32 overflow-hidden"
     >
       {/* Background com parallax */}
       <motion.div className="absolute inset-0" style={{ y: backgroundY }}>
