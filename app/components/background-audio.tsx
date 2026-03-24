@@ -4,80 +4,87 @@ import { useState, useRef, useEffect } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { useLocalStorageState } from "@/hooks/use-local-storage-state";
 
 export function BackgroundAudio() {
-  const [isMuted, setIsMuted] = useState(() => {
-    if (typeof window === "undefined") return true;
-
-    const saved = localStorage.getItem("audioMuted");
-    return saved !== null ? saved === "true" : true;
-  });
+  const [isMuted, setIsMuted, hydrated] = useLocalStorageState(
+    "audioMuted",
+    true,
+  );
   const audioRef = useRef<HTMLAudioElement>(null);
-  const isFirstRender = useRef(true);
+  const playAttempted = useRef(false);
 
-  // Carrega a preferência de áudio do usuário se existir
-  // useEffect(() => {
-  //   const savedMute = localStorage.getItem("audioMuted");
-  //   if (savedMute !== null) {
-  //     setIsMuted(savedMute === "true");
-  //   }
-  // }, []);
-
-  // Gerencia a reprodução e as tentativas de autoplay
   useEffect(() => {
-    if (!audioRef.current) return;
+    if (!hydrated || !audioRef.current) return;
 
-    // Não salva no localStorage no primeiro render para não sobrescrever a preferência carregada
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-    } else {
-      localStorage.setItem("audioMuted", isMuted.toString());
-    }
+    const audio = audioRef.current;
+    audio.volume = 0.05;
 
-    audioRef.current.volume = 0.05; // Volume bem baixo (5%)
+    const startOnInteraction = () => {
+      if (!isMuted) {
+        audio.play().catch(() => {});
+      }
+      removeListeners();
+    };
 
-    if (isMuted) {
-      audioRef.current.pause();
-    } else {
-      // Tenta tocar imediatamente
-      const playPromise = audioRef.current.play();
+    const addListeners = () => {
+      document.addEventListener("click", startOnInteraction);
+      document.addEventListener("keydown", startOnInteraction);
+      document.addEventListener("touchstart", startOnInteraction);
+    };
 
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Bloqueado pelo navegador!
-          // Vamos esperar por QUALQUER clique ou tecla na página toda
-          const startOnInteraction = () => {
-            if (audioRef.current && !isMuted) {
-              audioRef.current
-                .play()
-                .then(() => {
-                  // Deu certo! Removemos os ouvintes
-                  document.removeEventListener("click", startOnInteraction);
-                  document.removeEventListener("keydown", startOnInteraction);
-                  document.removeEventListener(
-                    "touchstart",
-                    startOnInteraction,
-                  );
-                })
-                .catch(() => {});
-            }
-          };
+    const removeListeners = () => {
+      document.removeEventListener("click", startOnInteraction);
+      document.removeEventListener("keydown", startOnInteraction);
+      document.removeEventListener("touchstart", startOnInteraction);
+    };
 
-          document.addEventListener("click", startOnInteraction);
-          document.addEventListener("keydown", startOnInteraction);
-          document.addEventListener("touchstart", startOnInteraction);
+    const attemptPlay = () => {
+      if (isMuted) {
+        audio.pause();
+      } else {
+        audio.play().catch(() => {
+          // Autoplay bloqueado, aguarda interação
+          addListeners();
         });
       }
+    };
+
+    if (isMuted) {
+      audio.pause();
+      removeListeners();
+    } else {
+      if (!playAttempted.current) {
+        const timer = setTimeout(() => {
+          attemptPlay();
+          playAttempted.current = true;
+        }, 3000);
+        return () => {
+          clearTimeout(timer);
+          removeListeners();
+        };
+      } else {
+        attemptPlay();
+      }
     }
-  }, [isMuted]);
+
+    return () => removeListeners();
+  }, [isMuted, hydrated]);
 
   const toggleMute = () => {
     setIsMuted((prev) => !prev);
+    playAttempted.current = true;
   };
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <audio ref={audioRef} src="/audio/noria_sound.mp3" loop preload="auto" />
+      <audio
+        ref={audioRef}
+        src="/audio/noria_sound.mp3"
+        loop
+        preload="auto"
+        muted={isMuted}
+      />
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
