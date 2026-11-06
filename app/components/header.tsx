@@ -1,8 +1,11 @@
 "use client"
 
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useState } from 'react'
+import { motion, useMotionValueEvent, useScroll } from 'framer-motion'
+import { Moon, Sun } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useTheme } from 'next-themes'
 
 const homeNavItems = [
   { name: 'Início', href: '#inicio' },
@@ -22,29 +25,21 @@ const cursosNavItems = [
 
 export function Header() {
   const { scrollY } = useScroll()
+  const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
   const isCursosPage = pathname === '/cursos'
 
-  const headerBackground = useTransform(
-    scrollY,
-    [0, 100],
-    ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 0.8)']
-  )
-  const headerBackdrop = useTransform(
-    scrollY,
-    [0, 100],
-    ['blur(0px)', 'blur(12px)']
-  )
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    setIsScrolled(latest > 20)
+  })
 
   const navItems = isCursosPage ? cursosNavItems : homeNavItems
 
   return (
     <motion.header
-      style={{
-        backgroundColor: headerBackground,
-        backdropFilter: headerBackdrop,
-      }}
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 md:px-12 lg:px-20"
+      className={`fixed top-0 left-0 right-0 z-50 px-6 py-4 md:px-12 lg:px-20 transition-colors duration-300 ${
+        isScrolled ? 'bg-background/85 backdrop-blur-xl shadow-sm' : 'bg-transparent'
+      }`}
     >
       <nav className="flex items-center justify-between max-w-7xl mx-auto">
         {/* Logo + aba Cursos */}
@@ -113,20 +108,44 @@ export function Header() {
           ))}
         </motion.ul>
 
-        {/* Mobile menu button */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="md:hidden"
-        >
-          <button className="p-2 text-foreground/80 hover:text-foreground transition-colors">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </motion.div>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden"
+          >
+            <button
+              type="button"
+              aria-label="Abrir menu"
+              className="p-2 text-foreground/80 hover:text-foreground transition-colors"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </motion.div>
+        </div>
       </nav>
     </motion.header>
+  )
+}
+
+function ThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme()
+
+  return (
+    <button
+      type="button"
+      aria-label="Alternar tema claro ou escuro"
+      title="Alternar tema claro ou escuro"
+      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/70 text-foreground/80 transition-colors hover:border-primary/50 hover:text-primary"
+    >
+      <Moon size={18} className="dark:hidden" aria-hidden="true" />
+      <Sun size={18} className="hidden dark:block" aria-hidden="true" />
+    </button>
   )
 }
