@@ -22,7 +22,7 @@ export function HeroSection() {
       id="inicio"
       className="relative min-h-screen flex items-center overflow-hidden"
     >
-      <div className="absolute inset-0 bg-background -z-10" />
+      <div className="absolute inset-0 bg-background dark:bg-transparent -z-10" />
       
       {/* Blurs de fundo dinâmicos */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">

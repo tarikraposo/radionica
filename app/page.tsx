@@ -5,6 +5,7 @@ import { AboutSection } from "./components/sections/about-section"
 import { ContactSection } from "./components/sections/contact-section"
 import { HeroSection } from "./components/sections/hero-section"
 import { HowItWorksSection } from "./components/sections/how-it-works-section"
+import { PlansSection } from "./components/sections/plans-section"
 import { SmoothScroll } from "./components/smooth-scroll"
 import { BackgroundAudio } from "./components/background-audio"
 
@@ -20,6 +21,7 @@ export default function HomePage() {
           <HeroSection />
           <AboutSection />
           <HowItWorksSection />
+          <PlansSection />
           <ContactSection />
         </div>
         <BackgroundAudio />

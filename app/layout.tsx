@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import { ThemeProvider } from "./components/theme-provider";
 import "./globals.css";
 
 const geist = localFont({
@@ -44,10 +45,13 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       className={`${geist.variable} ${geistMono.variable} ${playfair.variable}`}
+      suppressHydrationWarning
     >
       <body className="font-sans antialiased overflow-x-hidden">
-        {children}
-        <Analytics />
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          {children}
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );
