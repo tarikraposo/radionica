@@ -8,7 +8,8 @@ const homeNavItems = [
   { name: 'Início', href: '#inicio' },
   { name: 'Sobre', href: '#sobre' },
   { name: 'Como Funciona', href: '#como-funciona' },
-  { name: 'Contratar', href: '#contratar' },
+  { name: 'Planos', href: '#planos' },
+  { name: 'Entrar em contato', href: '#contato' },
 ]
 
 const cursosNavItems = [
