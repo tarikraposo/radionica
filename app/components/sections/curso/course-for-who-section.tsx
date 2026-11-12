@@ -53,13 +53,13 @@ export function CourseForWhoSection() {
             animate={isInView ? { opacity: 0.65, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.3 }}
             aria-hidden="true"
-            className="pointer-events-none absolute right-0 top-0 hidden h-56 w-56 lg:block"
+            className="pointer-events-none absolute right-0 top-0 hidden h-[340px] w-[340px] lg:block"
           >
             <Image
               src={lionessArtwork}
               alt=""
               fill
-              sizes="224px"
+              sizes="340px"
               className="object-contain"
             />
           </motion.div>
