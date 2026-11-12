@@ -2,6 +2,8 @@
 
 import { useRef } from "react"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import Image from "next/image"
+import anubisArtwork from "../../../assets/images/anubis.png"
 
 const learnings = [
   {
@@ -56,36 +58,57 @@ export function CourseLearnSection() {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
         {/* Título */}
-        <div ref={titleRef} className="mb-20 lg:mb-28">
-          <motion.span
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="inline-block text-8xl md:text-9xl font-serif font-light text-muted/30"
-          >
-            03
-          </motion.span>
+        <div
+          ref={titleRef}
+          className="mb-20 grid items-center gap-8 lg:mb-28 lg:grid-cols-[minmax(0,1.15fr)_minmax(260px,0.85fr)]"
+        >
+          <div>
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="inline-block text-8xl md:text-9xl font-serif font-light text-muted/30"
+            >
+              03
+            </motion.span>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight mt-4 text-balance"
-          >
-            O que você aprenderá
-            <br />
-            <span className="text-primary">e poderá realizar</span>
-          </motion.h2>
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight mt-4 text-balance"
+            >
+              O que você aprenderá
+              <br />
+              <span className="text-primary">e poderá realizar</span>
+            </motion.h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="text-muted-foreground text-lg mt-6 max-w-xl"
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.35 }}
+              className="text-muted-foreground text-lg mt-6 max-w-xl"
+            >
+              Ao concluir a formação, você estará apto(a) a realizar ativações em múltiplos contextos,
+              expandindo sua atuação como operador(a) de MER.
+            </motion.p>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, x: 20 }}
+            animate={isInView ? { opacity: 1, scale: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.25 }}
+            aria-hidden="true"
+            className="relative mx-auto h-64 w-full max-w-sm lg:h-[340px]"
           >
-            Ao concluir a formação, você estará apto(a) a realizar ativações em múltiplos contextos,
-            expandindo sua atuação como operador(a) de MER.
-          </motion.p>
+            <Image
+              src={anubisArtwork}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 35vw, 85vw"
+              className="object-contain"
+            />
+          </motion.div>
         </div>
 
         {/* Grid de aprendizados */}

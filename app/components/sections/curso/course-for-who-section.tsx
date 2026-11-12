@@ -2,6 +2,8 @@
 
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
+import Image from "next/image"
+import lionessArtwork from "../../../assets/images/liona-2.png"
 
 const profiles = [
   {
@@ -45,7 +47,22 @@ export function CourseForWhoSection() {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
         {/* Título */}
-        <div ref={titleRef} className="text-center mb-20 lg:mb-28">
+        <div ref={titleRef} className="relative text-center mb-20 lg:mb-28">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={isInView ? { opacity: 0.65, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            aria-hidden="true"
+            className="pointer-events-none absolute right-0 top-0 hidden h-56 w-56 lg:block"
+          >
+            <Image
+              src={lionessArtwork}
+              alt=""
+              fill
+              sizes="224px"
+              className="object-contain"
+            />
+          </motion.div>
           <motion.span
             initial={{ opacity: 0, y: -20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
