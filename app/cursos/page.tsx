@@ -28,7 +28,7 @@ export default function CursosPage() {
           animate={
             prefersReducedMotion
               ? undefined
-              : { x: [0, -3, 3, -3, 3, 0] }
+              : { x: [0, -3, 3, -3, 3, 0], y: [0, -3, 3, -3, 3, 0] }
           }
           transition={{
             duration: 0.45,
@@ -39,7 +39,7 @@ export default function CursosPage() {
           className="fixed right-4 top-24 z-40 w-56 rounded-2xl border border-primary/50 bg-card p-3 shadow-[0_12px_36px_-8px_rgba(0,0,0,0.35)] ring-1 ring-primary/15 md:right-8 md:top-24 md:w-60"
         >
           <p className="mb-2 flex items-center gap-2 px-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-            <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_var(--primary)]" aria-hidden="true" />
+            <span className="h-2 w-2 rounded-full bg-[green] shadow-[0_0_10px_var(--primary)]" aria-hidden="true" />
             Matrículas abertas
           </p>
           <Link

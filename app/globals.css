@@ -153,3 +153,25 @@
     text-wrap: pretty;
   }
 }
+
+/* @keyframes course-enrollment-nudge {
+  0%, 82%, 100% {
+    transform: translateX(0) rotate(0);
+  }
+  84%, 90%, 96% {
+    transform: translateX(-6px) rotate(-1deg);
+  }
+  87%, 93%, 99% {
+    transform: translateX(6px) rotate(1deg);
+  }
+}
+
+.course-enrollment-nudge {
+  animation: course-enrollment-nudge 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .course-enrollment-nudge {
+    animation: none;
+  }
+} */
