@@ -49,12 +49,12 @@ export function Header() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="flex items-center gap-6"
         >
-          <Link
+          {/* <Link
             href="/"
             className="text-lg font-medium tracking-tight text-foreground/90 hover:text-foreground transition-colors"
           >
             Mesa Radiônica
-          </Link>
+          </Link> */}
 
           <motion.div
             initial={{ opacity: 0, y: -6 }}
@@ -63,13 +63,13 @@ export function Header() {
           >
             <Link
               href="/cursos"
-              className={`relative text-sm font-medium transition-colors duration-300 group ${
+              className={`relative text-lg font-medium transition-colors duration-300 group ${
                 isCursosPage
                   ? 'text-primary'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
-              Cursos
+              Caminho Espiral
               <span
                 className={`absolute -bottom-1 left-0 h-px bg-primary transition-all duration-300 ${
                   isCursosPage ? 'w-full' : 'w-0 group-hover:w-full'

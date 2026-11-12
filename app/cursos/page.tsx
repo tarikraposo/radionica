@@ -1,6 +1,9 @@
 "use client"
 
+import { ArrowUpRight } from "lucide-react"
+import Link from "next/link"
 import { Header } from "../components/header"
+import { BackgroundAudio } from "../components/background-audio"
 import { SmoothScroll } from "../components/smooth-scroll"
 import { CourseHeroSection } from "../components/sections/curso/course-hero-section"
 import { CourseAboutSection } from "../components/sections/curso/course-about-section"
@@ -17,6 +20,13 @@ export default function CursosPage() {
     <SmoothScroll>
       <main className="relative">
         <Header />
+        <Link
+          href="#investimento"
+          className="fixed right-4 top-20 z-40 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-background/90 px-4 py-2.5 text-sm font-medium text-foreground shadow-lg backdrop-blur-md transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground md:right-8 md:px-5"
+        >
+          Matricule-se agora
+          <ArrowUpRight size={16} aria-hidden="true" />
+        </Link>
 
         <div className="relative z-20">
           <CourseHeroSection />
@@ -29,6 +39,7 @@ export default function CursosPage() {
           <CourseInfoSection />
           <CourseInvestmentSection />
         </div>
+        <BackgroundAudio />
       </main>
     </SmoothScroll>
   )
