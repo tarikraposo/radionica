@@ -1,10 +1,11 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
+import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { FaWhatsapp } from "react-icons/fa"
+import courseArtwork from "../../../assets/images/imagem3-2.png"
 
 export function CourseHeroSection() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -43,8 +44,11 @@ export function CourseHeroSection() {
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
-        <div className="flex flex-col items-center justify-center min-h-screen py-32 text-center">
-          <motion.div style={{ y: textY, opacity: textOpacity }}>
+        <div className="relative grid min-h-screen items-center py-32 lg:grid-cols-2">
+          <motion.div
+            style={{ y: textY, opacity: textOpacity }}
+            className="relative z-10 text-center lg:text-left"
+          >
             <motion.span
               initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -71,14 +75,14 @@ export function CourseHeroSection() {
               initial={{ opacity: 0, scaleX: 0 }}
               animate={{ opacity: 1, scaleX: 1 }}
               transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="w-16 h-px bg-primary/40 mt-8 mb-8 mx-auto"
+              className="w-16 h-px bg-primary/40 mt-8 mb-8 mx-auto lg:mx-0"
             />
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-muted-foreground text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-12"
+              className="text-muted-foreground text-lg md:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-12"
             >
               Uma jornada de aprendizado e transformação pessoal em Radiestesia e Radiônica.
               Certificação pela ABRATH. 16 horas de formação teórica e prática.
@@ -88,7 +92,7 @@ export function CourseHeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.1 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
             >
               <a
                 href={`https://wa.me/5561992072082?text=${encodeURIComponent("Olá! Gostaria de me inscrever no curso de Operador(a) de Mesa de Estação Radiônica.")}`}
@@ -109,6 +113,23 @@ export function CourseHeroSection() {
                 </svg>
               </Link>
             </motion.div>
+          </motion.div>
+
+          <motion.div
+            aria-hidden="true"
+            initial={{ opacity: 0, scale: 0.96, x: 24 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 1.2, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[52vh] opacity-25 lg:relative lg:inset-auto lg:h-[min(82vh,760px)] lg:opacity-90"
+          >
+            <Image
+              src={courseArtwork}
+              alt=""
+              fill
+              priority
+              sizes="(min-width: 1024px) 45vw, 95vw"
+              className="object-contain object-bottom lg:object-center"
+            />
           </motion.div>
         </div>
       </div>

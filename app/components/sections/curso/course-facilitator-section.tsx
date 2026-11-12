@@ -2,6 +2,8 @@
 
 import { useRef } from "react"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import Image from "next/image"
+import facilitatorArtwork from "../../../assets/images/facilitadora.png"
 
 const references = [
   "Amit Goswami",
@@ -89,7 +91,7 @@ export function CourseFacilitatorSection() {
           </div>
 
           {/* Direita – bio */}
-          <div className="space-y-6">
+          {/* <div className="space-y-6">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -132,8 +134,23 @@ export function CourseFacilitatorSection() {
               Sua formação em Radiestesia e Radiônica, somada à sua experiência prática, garantem um
               ensino profundo, humano e comprometido com o desenvolvimento genuíno de cada aluno.
             </motion.p>
-          </div>
+          </div> */}
         </motion.div>
+
+        <motion.figure
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+          className="relative z-10 mt-16 overflow-hidden rounded-2xl border border-primary/20 bg-card/40 p-2 shadow-[0_24px_70px_-30px_rgba(0,0,0,0.45)] backdrop-blur-sm md:mt-20 md:p-3"
+        >
+          <Image
+            src={facilitatorArtwork}
+            alt="Papiro com a mini biografia de Euda Raposo, sua trajetória em História Cultural, Arteterapia, Radiestesia e Radiônica."
+            sizes="(min-width: 1280px) 1152px, calc(100vw - 3rem)"
+            className="h-auto w-full rounded-xl"
+          />
+        </motion.figure>
       </div>
     </section>
   )

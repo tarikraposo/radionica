@@ -2,6 +2,8 @@
 
 import { useRef } from "react"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import Image from "next/image"
+import crystalArtwork from "../../../assets/images/cristal.png"
 
 export function CourseAboutSection() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -53,6 +55,23 @@ export function CourseAboutSection() {
               <br />
               <span className="text-primary">Curso</span>
             </motion.h2>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.35 }}
+              aria-hidden="true"
+              className="relative mt-8 aspect-[4/3] w-full max-w-sm"
+            >
+              <div className="absolute inset-1/4 rounded-full bg-blue-glow/20 blur-3xl" />
+              <Image
+                src={crystalArtwork}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 35vw, 85vw"
+                className="object-contain"
+              />
+            </motion.div>
           </div>
 
           {/* Direita – conteúdo */}
