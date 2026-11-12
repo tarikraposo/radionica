@@ -20,7 +20,7 @@ const cursosNavItems = [
   { name: 'Facilitadora', href: '#facilitadora' },
   { name: 'Conteúdo', href: '#o-que-aprender' },
   { name: 'Turma', href: '#informacoes-turma' },
-  { name: 'Investimento', href: '#investimento' },
+  { name: 'Matricule-se', href: '#investimento' },
 ]
 
 export function Header() {
