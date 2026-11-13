@@ -103,6 +103,8 @@ export function CourseInvestmentSection() {
               <a
                 href={stripePaymentUrl}
                 className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-4 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Pagar R$ 997,00 à vista
               </a>
@@ -156,7 +158,7 @@ export function CourseInvestmentSection() {
               {infinityPayPaymentUrl ? (
                 <a
                   href={infinityPayPaymentUrl}
-                  className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-4 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-primary-foreground px-6 py-4 text-sm font-medium text-accent-foreground shadow-lg shadow-accent-foreground/20 transition-colors hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -167,7 +169,7 @@ export function CourseInvestmentSection() {
                   type="button"
                   className="mt-8 inline-flex w-full cursor-not-allowed items-center justify-center rounded-full border border-border bg-muted/40 px-6 py-4 text-sm font-medium text-muted-foreground opacity-70"
                 >
-                  Link da Infinity Pay em breve
+                  Indisponível temporariamente
                 </button>
               )}
             </div>
@@ -210,7 +212,7 @@ export function CourseInvestmentSection() {
             href="https://www.instagram.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-5 border border-border rounded-full text-sm text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-5 border border-border rounded-full text-sm text-accent-foreground bg-primary-foreground  transition-colors shadow-lg shadow-accent-foreground/20 transition-colors hover:bg-accent/90"
           >
             Contato pelo Instagram Direct
           </a>
