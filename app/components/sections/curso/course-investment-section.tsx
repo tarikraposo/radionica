@@ -4,6 +4,9 @@ import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { FaWhatsapp } from "react-icons/fa"
 
+const stripePaymentUrl = "https://buy.stripe.com/6oU3cvdX45yy7xOfqj9fW00"
+const infinityPayPaymentUrl = "https://link.infinitepay.io/euda-da-g66/VC1D-329EAXb3V5-1200,00"
+
 export function CourseInvestmentSection() {
   const titleRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(titleRef, { once: true, margin: "-100px" })
@@ -97,6 +100,12 @@ export function CourseInvestmentSection() {
                   </li>
                 </ul>
               </div>
+              <a
+                href={stripePaymentUrl}
+                className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-4 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                Pagar R$ 997,00 à vista
+              </a>
             </div>
           </motion.div>
 
@@ -144,6 +153,23 @@ export function CourseInvestmentSection() {
                   </li>
                 </ul>
               </div>
+              {infinityPayPaymentUrl ? (
+                <a
+                  href={infinityPayPaymentUrl}
+                  className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-4 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Pagar R$ 1.380,00 parcelado
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  className="mt-8 inline-flex w-full cursor-not-allowed items-center justify-center rounded-full border border-border bg-muted/40 px-6 py-4 text-sm font-medium text-muted-foreground opacity-70"
+                >
+                  Link da Infinity Pay em breve
+                </button>
+              )}
             </div>
           </motion.div>
         </div>
