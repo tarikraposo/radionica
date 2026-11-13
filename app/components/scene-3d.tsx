@@ -56,8 +56,8 @@ function Model() {
         rotation={[0, 0, 0]}
         polar={[-0.2, 0.2]}
         azimuth={[-0.5, 0.5]}
-        config={{ mass: 2, tension: 400 }}
-        snap={{ mass: 4, tension: 300 }}
+        damping={0.25}
+        snap={0.25}
       >
         <group ref={meshRef} scale={1.8} rotation={[0.4, 0, 0]}>
           <primitive object={scene} />
