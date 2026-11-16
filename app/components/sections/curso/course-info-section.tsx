@@ -75,8 +75,8 @@ export function CourseInfoSection() {
           className="mt-12 p-8 rounded-2xl border border-primary/20 bg-primary/5 text-center"
         >
           <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-2">Oportunidade especial</p>
-          <p className="text-lg md:text-xl font-medium text-foreground">
-            Possibilidade de conhecer o curso durante o período do evento
+          <p className="text-md font-medium text-foreground">
+            Pagamento à vista liberado para essa turma. Aproveite a oportunidade de garantir sua vaga com desconto especial!
           </p>
         </motion.div>
       </div>

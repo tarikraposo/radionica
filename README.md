@@ -31,6 +31,22 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Deploy on Cloudflare Workers
+
+This project uses OpenNext to deploy Next.js to Cloudflare Workers. Run
+`npm run preview` to build and test the Worker locally, or `npm run deploy` to
+build and deploy it. The first deploy requires Wrangler authentication with
+`npx wrangler login`.
+
+Set `RESEND_API_KEY` as a Cloudflare Worker secret before deploying:
+
+```bash
+npx wrangler secret put RESEND_API_KEY
+```
+
+For local Worker previews, copy `.dev.vars.example` to `.dev.vars` and provide
+your Resend API key there. Do not commit `.dev.vars`.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

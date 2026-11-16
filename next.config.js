@@ -17,4 +17,8 @@ const nextConfig = {
   },
 }
 
+import("@opennextjs/cloudflare").then(({ initOpenNextCloudflareForDev }) =>
+  initOpenNextCloudflareForDev(),
+)
+
 export default nextConfig
